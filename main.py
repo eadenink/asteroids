@@ -33,8 +33,13 @@ def main():
         for obj in groups.drawable:
             obj.draw(screen)
 
-        for obj in groups.asteroids:
-            if obj.is_colliding_with(player):
+        for asteroid in groups.asteroids:
+            for shot in groups.shots:
+                if shot.is_colliding_with(asteroid):
+                    shot.kill()
+                    asteroid.kill()
+
+            if asteroid.is_colliding_with(player):
                 sys.exit("Game Over!")
 
         pygame.display.flip()
