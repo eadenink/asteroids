@@ -1,3 +1,5 @@
+import sys
+
 import pygame
 
 import groups
@@ -14,7 +16,7 @@ def main():
 
     screen_center = (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
-    Player(*screen_center)
+    player = Player(*screen_center)
     AsteroidField()
 
     dt = 0
@@ -30,6 +32,10 @@ def main():
             obj.update(dt)
         for obj in groups.drawable:
             obj.draw(screen)
+
+        for obj in groups.asteroids:
+            if obj.is_colliding_with(player):
+                sys.exit("Game Over!")
 
         pygame.display.flip()
         dt = clock.tick(60) / 1000
